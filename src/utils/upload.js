@@ -12,10 +12,10 @@ const fileCategories = {
 
 // Dossiers de stockage
 const uploadDirs = {
-    images: 'uploads/images',
-    pdfs: 'uploads/pdfs',
-    videos: 'uploads/videos',
-    others: 'uploads/others'
+    images: 'src/uploads/images',
+    pdfs: 'src/uploads/pdfs',
+    videos: 'src/uploads/videos',
+    others: 'src/uploads/others'
 };
 
 // Vérifier et créer les dossiers au démarrage

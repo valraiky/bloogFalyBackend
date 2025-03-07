@@ -1,15 +1,19 @@
 import express from "express";
 import dotenv from "dotenv";
-import { initDatabase } from "./models/index.js";
+import { initDatabase } from "./src/models/index.js";
 import passport from "passport";
-import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import formationRoutes from "./routes/formationRoutes.js";
-import "./config/passport.js";
+import authRoutes from "./src/routes/authRoutes.js";
+import userRoutes from "./src/routes/userRoutes.js";
+import formationRoutes from "./src/routes/formationRoutes.js";
+import lessonRoutes from "./src/routes/lessonRoutes.js";
+import descLessonRoutes from "./src/routes/descLesssonRoutes.js"
+import "./src/config/passport.js";
 import cors from 'cors';
 import morgan from "morgan";
 import bodyParser from "body-parser";
-import { upload } from "./utils/upload.js";
+import { upload } from "./src/utils/upload.js";
+import path from "path";
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
@@ -27,7 +31,16 @@ app.use(passport.initialize());
 
 app.use("/users", userRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/formations", formationRoutes)
+app.use("/formations", formationRoutes);
+app.use("/lessons", lessonRoutes);
+app.use("/descLessons", descLessonRoutes);
+
+// Obtenir le chemin du répertoire courant
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Configuration des fichiers statiques
+app.use('/images', express.static(path.join(__dirname, 'src/uploads/images')));
 
 const PORT = process.env.PORT || 3000;
 
