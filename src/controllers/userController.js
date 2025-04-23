@@ -55,8 +55,14 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export const getUserProfile = (req, res) => {
-  res.json({ message: "Profil utilisateur récupéré avec succès", user: req.user });
+export const getUserProfile = async(req, res) => {
+
+  const user = await User.findByPk(req.user.id, {
+    attributes: ['id', 'email', 'role'] // retourne les champs que tu veux
+  });
+
+  // res.json({ message: "Profil utilisateur récupéré avec succès", user: req.user });
+  res.json(user);
 };
 
 export default {

@@ -14,14 +14,20 @@ import bodyParser from "body-parser";
 import { upload } from "./src/utils/upload.js";
 import path from "path";
 import { fileURLToPath } from 'url';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
 const app = express();
 
 // Middlewares
-app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:5173', // React client
+  credentials: true
+}));
 app.use(express.json());
+app.use(cookieParser());
 app
   .use(morgan("dev"))
   .use(bodyParser.json())
@@ -29,7 +35,7 @@ app
 // app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 
-app.use("/users", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/formations", formationRoutes);
 app.use("/lessons", lessonRoutes);
